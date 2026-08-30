@@ -5,101 +5,636 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数据分析与可视化 — 学生项目展示</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        header { background: #1a1a2e; color: white; padding: 40px 20px; text-align: center; }
-        header h1 { font-size: 2em; margin-bottom: 10px; }
-        header p { opacity: 0.8; font-size: 1.1em; }
-        .stats { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
-        .stat { text-align: center; }
-        .stat-num { font-size: 2em; font-weight: bold; }
-        .stat-label { font-size: 0.9em; opacity: 0.7; }
-        
+
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-card-hover: #1f2b3d;
+            --accent: #00d4ff;
+            --accent-dim: rgba(0, 212, 255, 0.15);
+            --accent-glow: rgba(0, 212, 255, 0.3);
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(0, 212, 255, 0.12);
+            --border-hover: rgba(0, 212, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Data grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating orbs */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-2 {
+            position: fixed;
+            bottom: -300px; left: -200px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* Navigation */
-        nav { background: #16213e; padding: 10px 20px; position: sticky; top: 0; z-index: 100; }
-        nav ul { display: flex; justify-content: center; gap: 30px; list-style: none; }
-        nav a { color: white; text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 4px; transition: background 0.3s; }
-        nav a:hover { background: rgba(255,255,255,0.1); }
-        
-        /* Sections */
-        .section { margin-bottom: 40px; }
-        .section-title { font-size: 1.5em; color: #1a1a2e; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #1a1a2e; }
-        
-        /* Projects */
-        .projects { margin-top: 30px; }
-        .project { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .project-title { font-size: 1.2em; font-weight: 600; }
-        .project-status { padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 500; }
-        .status-progress { background: #fff3cd; color: #856404; }
-        .status-done { background: #d4edda; color: #155724; }
-        .status-launch { background: #cce5ff; color: #004085; }
-        .project-student { color: #666; margin-bottom: 8px; }
-        .project-desc { margin-bottom: 10px; }
-        .project-links { display: flex; gap: 15px; flex-wrap: wrap; }
-        .project-links a { color: #0066cc; text-decoration: none; font-size: 0.9em; }
-        .project-links a:hover { text-decoration: underline; }
-        
-        /* Resources */
-        .resources { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .resource-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .resource-title { font-weight: 600; margin-bottom: 10px; color: #1a1a2e; }
-        
-        footer { text-align: center; padding: 30px; color: #999; font-size: 0.9em; }
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+        }
+
+        .logo-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-text {
+            font-size: 1.05em;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: var(--accent-dim);
+        }
+
+        /* Main content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 40px 80px;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+            padding: 40px 0;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-dim);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: 2.6em;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.15em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 36px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 56px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-icon {
+            width: 32px; height: 32px;
+            background: var(--accent-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-icon svg {
+            width: 16px; height: 16px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .section-title {
+            font-size: 1.35em;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.05);
+        }
+
+        /* Project card */
+        .project {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent), #6366f1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .project:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 16px;
+        }
+
+        .project-title {
+            font-size: 1.15em;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-progress {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .badge-done {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        .badge-launch {
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .project-student {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .project-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.88em;
+            font-weight: 500;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .project-links a:hover {
+            background: var(--accent-dim);
+            border-color: var(--border-hover);
+        }
+
+        /* Resource grid */
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .resource-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .resource-icon {
+            width: 40px; height: 40px;
+            background: var(--accent-dim);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .resource-icon svg {
+            width: 20px; height: 20px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .resource-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .resource-desc {
+            color: var(--text-secondary);
+            font-size: 0.92em;
+            line-height: 1.6;
+        }
+
+        /* Rules */
+        .rules-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .rule-item:first-child {
+            padding-top: 0;
+        }
+
+        .rule-num {
+            width: 28px; height: 28px;
+            background: var(--accent-dim);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .rule-content strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .rule-content span {
+            color: var(--text-secondary);
+            font-size: 0.92em;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 32px 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            main { padding: 32px 20px 60px; }
+            .hero h1 { font-size: 1.8em; }
+            .stats-row { gap: 32px; }
+            .nav-links { gap: 0; }
+            .nav-links a { padding: 8px 10px; font-size: 0.82em; }
+        }
+
+        /* Animated scan line */
+        @keyframes scan {
+            0% { top: -100%; }
+            100% { top: 200%; }
+        }
+
+        .scan-line {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>数据分析与可视化</h1>
-        <p>2026秋季 · 学生项目展示</p>
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-num">0</div>
-                <div class="stat-label">个项目</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">0</div>
-                <div class="stat-label">位同学</div>
-            </div>
-        </div>
-    </header>
-    
+    <div class="orb-2"></div>
+    <div class="scan-line"></div>
+
     <nav>
-        <ul>
-            <li><a href="#intro">课程简介</a></li>
-            <li><a href="#rules">课程公约</a></li>
-            <li><a href="#projects">精彩项目</a></li>
-            <li><a href="#resources">课程资源</a></li>
-        </ul>
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16l4-5 4 3 5-7"/></svg>
+                </div>
+                <span class="logo-text">数据分析与可视化</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#intro">课程简介</a></li>
+                <li><a href="#rules">课程公约</a></li>
+                <li><a href="#projects">精彩项目</a></li>
+                <li><a href="#resources">课程资源</a></li>
+            </ul>
+        </div>
     </nav>
-    
-    <div class="container">
-        <!-- 课程简介 -->
-        <section id="intro" class="section">
-            <h2 class="section-title">课程简介</h2>
-            <p>本课程旨在培养学生数据分析与可视化能力，通过实际项目实践，让学生掌握数据收集、清洗、分析和可视化呈现的全流程技能。课程涵盖 Python 数据分析、SQL 数据库操作、数据可视化工具等内容，注重理论与实践相结合。</p>
-        </section>
-        
-        <!-- 课程公约 -->
-        <section id="rules" class="section">
-            <h2 class="section-title">课程公约</h2>
-            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                <p><strong>1. 诚信原则</strong>：独立完成作业，禁止抄袭代码，引用需注明来源。</p>
-                <p><strong>2. 团队协作</strong>：小组项目需明确分工，定期沟通，共同推进。</p>
-                <p><strong>3. 代码规范</strong>：遵循项目代码规范，添加必要注释，保持代码可读性。</p>
-                <p><strong>4. 及时提交</strong>：按时提交作业，如有困难提前沟通。</p>
+
+    <main>
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                2026 秋季学期
+            </div>
+            <h1>学生项目展示</h1>
+            <p>探索数据的力量，用可视化讲述数据背后的故事</p>
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">个项目</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">位同学</div>
+                </div>
             </div>
         </section>
-        
-        <!-- 精彩项目 -->
+
+        <section id="intro" class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                </div>
+                <h2 class="section-title">课程简介</h2>
+            </div>
+            <div class="card">
+                <p>本课程旨在培养学生数据分析与可视化能力，通过实际项目实践，让学生掌握数据收集、清洗、分析和可视化呈现的全流程技能。课程涵盖 Python 数据分析、SQL 数据库操作、数据可视化工具等内容，注重理论与实践相结合。</p>
+            </div>
+        </section>
+
+        <section id="rules" class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h2 class="section-title">课程公约</h2>
+            </div>
+            <div class="rules-card">
+                <div class="rule-item">
+                    <div class="rule-num">1</div>
+                    <div class="rule-content">
+                        <strong>诚信原则</strong>
+                        <span>独立完成作业，禁止抄袭代码，引用需注明来源。</span>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">2</div>
+                    <div class="rule-content">
+                        <strong>团队协作</strong>
+                        <span>小组项目需明确分工，定期沟通，共同推进。</span>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">3</div>
+                    <div class="rule-content">
+                        <strong>代码规范</strong>
+                        <span>遵循项目代码规范，添加必要注释，保持代码可读性。</span>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">4</div>
+                    <div class="rule-content">
+                        <strong>及时提交</strong>
+                        <span>按时提交作业，如有困难提前沟通。</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="projects" class="section">
-            <h2 class="section-title">精彩项目</h2>
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <h2 class="section-title">精彩项目</h2>
+            </div>
             <div class="projects">
                 <div class="project">
                     <div class="project-header">
                         <div class="project-title">示例：股票情绪分析仪表盘</div>
-                        <span class="project-status status-progress">进行中</span>
+                        <span class="badge badge-progress">进行中</span>
                     </div>
                     <div class="project-student">张三 · 金融学2023级</div>
                     <div class="project-desc">基于雪球社区情绪数据的股票走势分析工具，帮助散户投资者捕捉市场情绪变化。</div>
@@ -108,30 +643,42 @@
                         <a href="#">项目仓库</a>
                     </div>
                 </div>
-                <!-- 在下方添加更多项目 -->
             </div>
         </section>
-        
-        <!-- 课程资源 -->
+
         <section id="resources" class="section">
-            <h2 class="section-title">课程资源</h2>
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <h2 class="section-title">课程资源</h2>
+            </div>
             <div class="resources">
                 <div class="resource-card">
+                    <div class="resource-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
                     <div class="resource-title">课件与笔记</div>
-                    <p>每周课程课件、学习笔记及参考资料</p>
+                    <div class="resource-desc">每周课程课件、学习笔记及参考资料</div>
                 </div>
                 <div class="resource-card">
+                    <div class="resource-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
                     <div class="resource-title">代码仓库</div>
-                    <p>课程示例代码、项目模板及最佳实践</p>
+                    <div class="resource-desc">课程示例代码、项目模板及最佳实践</div>
                 </div>
                 <div class="resource-card">
+                    <div class="resource-icon">
+                        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    </div>
                     <div class="resource-title">数据集</div>
-                    <p>课程使用的数据集及外部数据源推荐</p>
+                    <div class="resource-desc">课程使用的数据集及外部数据源推荐</div>
                 </div>
             </div>
         </section>
-    </div>
-    
+    </main>
+
     <footer>
         数据分析与可视化 · 2026秋季课程
     </footer>
