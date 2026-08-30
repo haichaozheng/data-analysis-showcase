@@ -15,6 +15,18 @@
         .stat { text-align: center; }
         .stat-num { font-size: 2em; font-weight: bold; }
         .stat-label { font-size: 0.9em; opacity: 0.7; }
+        
+        /* Navigation */
+        nav { background: #16213e; padding: 10px 20px; position: sticky; top: 0; z-index: 100; }
+        nav ul { display: flex; justify-content: center; gap: 30px; list-style: none; }
+        nav a { color: white; text-decoration: none; font-weight: 500; padding: 8px 16px; border-radius: 4px; transition: background 0.3s; }
+        nav a:hover { background: rgba(255,255,255,0.1); }
+        
+        /* Sections */
+        .section { margin-bottom: 40px; }
+        .section-title { font-size: 1.5em; color: #1a1a2e; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #1a1a2e; }
+        
+        /* Projects */
         .projects { margin-top: 30px; }
         .project { background: white; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
@@ -28,6 +40,12 @@
         .project-links { display: flex; gap: 15px; flex-wrap: wrap; }
         .project-links a { color: #0066cc; text-decoration: none; font-size: 0.9em; }
         .project-links a:hover { text-decoration: underline; }
+        
+        /* Resources */
+        .resources { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .resource-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .resource-title { font-weight: 600; margin-bottom: 10px; color: #1a1a2e; }
+        
         footer { text-align: center; padding: 30px; color: #999; font-size: 0.9em; }
     </style>
 </head>
@@ -46,39 +64,74 @@
             </div>
         </div>
     </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#intro">课程简介</a></li>
+            <li><a href="#rules">课程公约</a></li>
+            <li><a href="#projects">精彩项目</a></li>
+            <li><a href="#resources">课程资源</a></li>
+        </ul>
+    </nav>
+    
     <div class="container">
-        <div class="projects">
-            <!-- 示例项目（删除后添加真实项目） -->
-            <div class="project">
-                <div class="project-header">
-                    <div class="project-title">示例：股票情绪分析仪表盘</div>
-                    <span class="project-status status-progress">进行中</span>
+        <!-- 课程简介 -->
+        <section id="intro" class="section">
+            <h2 class="section-title">课程简介</h2>
+            <p>本课程旨在培养学生数据分析与可视化能力，通过实际项目实践，让学生掌握数据收集、清洗、分析和可视化呈现的全流程技能。课程涵盖 Python 数据分析、SQL 数据库操作、数据可视化工具等内容，注重理论与实践相结合。</p>
+        </section>
+        
+        <!-- 课程公约 -->
+        <section id="rules" class="section">
+            <h2 class="section-title">课程公约</h2>
+            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <p><strong>1. 诚信原则</strong>：独立完成作业，禁止抄袭代码，引用需注明来源。</p>
+                <p><strong>2. 团队协作</strong>：小组项目需明确分工，定期沟通，共同推进。</p>
+                <p><strong>3. 代码规范</strong>：遵循项目代码规范，添加必要注释，保持代码可读性。</p>
+                <p><strong>4. 及时提交</strong>：按时提交作业，如有困难提前沟通。</p>
+            </div>
+        </section>
+        
+        <!-- 精彩项目 -->
+        <section id="projects" class="section">
+            <h2 class="section-title">精彩项目</h2>
+            <div class="projects">
+                <div class="project">
+                    <div class="project-header">
+                        <div class="project-title">示例：股票情绪分析仪表盘</div>
+                        <span class="project-status status-progress">进行中</span>
+                    </div>
+                    <div class="project-student">张三 · 金融学2023级</div>
+                    <div class="project-desc">基于雪球社区情绪数据的股票走势分析工具，帮助散户投资者捕捉市场情绪变化。</div>
+                    <div class="project-links">
+                        <a href="#">产品链接</a>
+                        <a href="#">项目仓库</a>
+                    </div>
                 </div>
-                <div class="project-student">张三 · 金融学2023级</div>
-                <div class="project-desc">基于雪球社区情绪数据的股票走势分析工具，帮助散户投资者捕捉市场情绪变化。</div>
-                <div class="project-links">
-                    <a href="#">产品链接</a>
-                    <a href="#">项目仓库</a>
+                <!-- 在下方添加更多项目 -->
+            </div>
+        </section>
+        
+        <!-- 课程资源 -->
+        <section id="resources" class="section">
+            <h2 class="section-title">课程资源</h2>
+            <div class="resources">
+                <div class="resource-card">
+                    <div class="resource-title">课件与笔记</div>
+                    <p>每周课程课件、学习笔记及参考资料</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-title">代码仓库</div>
+                    <p>课程示例代码、项目模板及最佳实践</p>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-title">数据集</div>
+                    <p>课程使用的数据集及外部数据源推荐</p>
                 </div>
             </div>
-
-            <!-- 在下方添加更多项目，格式如下：
-            <div class="project">
-                <div class="project-header">
-                    <div class="project-title">项目名称</div>
-                    <span class="project-status status-progress">进行中</span>
-                </div>
-                <div class="project-student">学生姓名 · 专业年级</div>
-                <div class="project-desc">项目简介（一句话描述核心价值）</div>
-                <div class="project-links">
-                    <a href="#">产品链接</a>
-                    <a href="#">项目仓库</a>
-                </div>
-            </div>
-            -->
-
-        </div>
+        </section>
     </div>
+    
     <footer>
         数据分析与可视化 · 2026秋季课程
     </footer>
