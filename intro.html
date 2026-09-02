@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>课程简介 — 数据分析与可视化</title>
+    <meta name="description" content="财经本科生 17 周独立交付一款数据分析产品的 PBL 课程展示——公开路演入口与学生作品集。">
+    <meta property="og:title" content="数据分析与可视化 · 2026秋季">
+    <meta property="og:description" content="财经本科生 17 周独立交付一款数据分析产品的 PBL 课程展示——公开路演入口与学生作品集。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://haichaozheng.github.io/data-analysis-showcase/">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,6 +31,10 @@
                 </div>
                 <span class="logo-text">数据分析与可视化</span>
             </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </label>
             <ul class="nav-links">
                 <li><a href="intro.html" class="active">课程简介</a></li>
                 <li><a href="timeline.html">项目之旅</a></li>
@@ -78,7 +88,7 @@
                 <h2 class="section-title">AI 基础工具栈</h2>
             </div>
             <div class="card">
-                <p>AI 工具随项目需求 <strong>渐进式融入</strong>，而非单独设课：AI 辅助编程（W1 起步）→ Prompt Engineering → RAG（W9 进阶）→ 建模增强（W12-W15）→ AI 系统评估（贯穿全阶段）。学生在产品中集成 LLM 能力，而非仅用大模型写代码。</p>
+                <p>AI 工具随项目需求 <strong>渐进式融入</strong>，而非单独设课：Prompt + AI 辅助编程（W1 起步）→ LangChain + LLM API（W8 必做）→ RAG（W9 选做升级）→ 建模增强（W11-W15）→ AI 系统评估（贯穿全阶段）。学生在产品中集成 LLM 能力，而非仅用大模型写代码。</p>
             </div>
         </div>
 
@@ -93,10 +103,35 @@
                 <p>课程以 <strong>公开产品为终点</strong>：期末面向全校与企业合作伙伴进行公开路演，每人产出并可公开访问一个独立产品。本展示网站即路演的公众入口。完整 17 周安排详见<a href="timeline.html" style="color:var(--accent);">项目之旅</a>。</p>
             </div>
         </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </div>
+                <h2 class="section-title">选题三档来源</h2>
+            </div>
+            <div class="card">
+                <p>选题鼓励同时命中多档：<strong>财经新闻驱动</strong>（从政策、数据发布、财经事件中提炼话题）、<strong>真实需求驱动</strong>（从身边人与社区观察到的真实痛点出发）、<strong>个人爱好</strong>（从学生自身兴趣出发）。所有选题须在 W3 经用户访谈验证真实需求，否则调整或重选。</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+                </div>
+                <h2 class="section-title">评分结构一览</h2>
+            </div>
+            <div class="card">
+                <p>总成绩 = 平时成绩（30）+ 项目成绩（70）。项目成绩含 <strong>个人项目 50</strong>（产品质量 ×0.6 + 项目报告 ×0.4，一人一产品独立交付）、<strong>协作互评 10</strong>（组内 360° 匿名互评）、<strong>组内项目平均 10</strong>（你的成绩与同伴成功绑定，激励互助赋能）。</p>
+            </div>
+        </div>
     </main>
 
     <footer>
         数据分析与可视化 · 2026秋季课程
+        <span style="display:block;margin-top:4px;font-size:0.9em;opacity:0.7;">最后更新 2026-09-02</span>
     </footer>
 </body>
 </html>

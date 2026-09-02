@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>产业新闻 — 数据分析与可视化</title>
+    <meta name="description" content="财经本科生 17 周独立交付一款数据分析产品的 PBL 课程展示——公开路演入口与学生作品集。">
+    <meta property="og:title" content="数据分析与可视化 · 2026秋季">
+    <meta property="og:description" content="财经本科生 17 周独立交付一款数据分析产品的 PBL 课程展示——公开路演入口与学生作品集。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://haichaozheng.github.io/data-analysis-showcase/">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,6 +31,10 @@
                 </div>
                 <span class="logo-text">数据分析与可视化</span>
             </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </label>
             <ul class="nav-links">
                 <li><a href="intro.html">课程简介</a></li>
                 <li><a href="timeline.html">项目之旅</a></li>
@@ -55,12 +65,23 @@
 
         <div class="section">
             <div class="news-list">
-                <div class="coming-soon">
-                    <div class="coming-soon-icon">
-                        <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5"/></svg>
+                <div class="news-card">
+                    <div class="news-meta">
+                        <span class="news-date">2026-08-29</span>
+                        <span class="news-source">来源：课程示例</span>
                     </div>
-                    <div class="coming-soon-title">暂无新闻</div>
-                    <div class="coming-soon-desc">产业新闻将不定期更新，敬请关注。</div>
+                    <h3 class="news-title">央行宣布降准 0.5 个百分点 <span class="example-flag">示例</span></h3>
+                    <p class="news-summary">降准释放长期资金、影响银行间流动性。可做"货币政策传导"或"银行股流动性"数据分析产品——从财经事件驱动选题的范例。</p>
+                    <a href="#" class="news-link">选题启示 →</a>
+                </div>
+                <div class="news-card">
+                    <div class="news-meta">
+                        <span class="news-date">2026-08-15</span>
+                        <span class="news-source">来源：课程示例</span>
+                    </div>
+                    <h3 class="news-title">CPI 同比数据公布，食品与非食品分项背离 <span class="example-flag">示例</span></h3>
+                    <p class="news-summary">分项数据背离揭示通胀结构性特征。可做"通胀结构分析"产品——把宏观数据拆解为可交互的洞察，是财经新闻驱动选题的典型路径。</p>
+                    <a href="#" class="news-link">选题启示 →</a>
                 </div>
             </div>
         </div>
@@ -68,6 +89,7 @@
 
     <footer>
         数据分析与可视化 · 2026秋季课程
+        <span style="display:block;margin-top:4px;font-size:0.9em;opacity:0.7;">最后更新 2026-09-02</span>
     </footer>
 </body>
 </html>
