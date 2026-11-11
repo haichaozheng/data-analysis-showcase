@@ -28,7 +28,7 @@
 
 ### 新增项目卡片（projects.html）
 
-复制下方模板，填入内容后放在 projects.html 的项目区：
+复制下方模板，填入内容后放在 projects.html 的 `.project-grid` 容器内：
 
 ```html
 <div class="project-card">
@@ -36,16 +36,9 @@
         <div class="project-card-title">项目名称</div>
         <span class="badge badge-live">已上线</span>
     </div>
-    <div class="project-card-author">作者 · 专业年级</div>
-    <div class="project-card-desc">一两句话说明项目解决什么问题、用了什么数据与 AI 能力。</div>
-    <div class="project-tags">
-        <span class="tag">标签</span>
-        <span class="tag tag-ai">AI 能力</span>
-    </div>
+    <div class="project-card-author">作者</div>
     <div class="project-links">
-        <a href="#">产品链接</a>
-        <a href="#">项目仓库</a>
-        <a href="#">Demo 视频</a>
+        <a href="#" target="_blank" rel="noopener">项目仓库</a>
     </div>
 </div>
 ```

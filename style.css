@@ -664,6 +664,20 @@ footer {
 }
 
 /* Project cards */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+.project-grid .project-card {
+    margin-bottom: 0;
+}
+.project-more {
+    margin-top: 20px;
+    color: var(--text-muted);
+    font-size: 0.9em;
+    text-align: center;
+}
 .project-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
