@@ -666,11 +666,35 @@ footer {
 /* Project cards */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
 }
 .project-grid .project-card {
     margin-bottom: 0;
+    padding: 16px 18px;
+    border-radius: 12px;
+}
+.project-grid .project-card-head {
+    margin-bottom: 4px;
+}
+.project-grid .project-card-title {
+    font-size: 0.98em;
+    line-height: 1.5;
+}
+.project-grid .badge {
+    padding: 3px 10px;
+    font-size: 0.7em;
+}
+.project-grid .project-card-author {
+    margin-bottom: 10px;
+    font-size: 0.84em;
+}
+.project-grid .project-links {
+    gap: 8px;
+}
+.project-grid .project-links a {
+    padding: 4px 12px;
+    font-size: 0.8em;
 }
 .project-more {
     margin-top: 20px;
